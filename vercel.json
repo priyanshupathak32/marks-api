@@ -1,12 +1,14 @@
 {
-  "functions": {
-    "api/index.py": {
-      "runtime": "vercel-python@0.9.0"
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/index.py",
+      "use": "@vercel/python@canary"
     }
-  },
+  ],
   "routes": [
     {
-      "src": "/api",
+      "src": "/(.*)",
       "dest": "api/index.py"
     }
   ]
