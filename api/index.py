@@ -1,33 +1,10 @@
-import json
 import os
+import json
 
-def handler(request):
-    headers = {
-        "Access-Control-Allow-Origin": "*",
-        "Content-Type": "application/json"
-    }
+def get_file_path(filename):
+    return os.path.join(os.path.dirname(os.path.abspath(__file__)), filename)
 
-    try:
-        with open(os.path.join(os.path.dirname(__file__), "marks.json")) as f:
-            data = json.load(f)
-
-        query = request.get("query", {})
-        names = query.get("name", [])
-
-        if isinstance(names, str):
-            names = [names]
-
-        marks = [data.get(name, 0) for name in names]
-
-        return {
-            "statusCode": 200,
-            "headers": headers,
-            "body": json.dumps({"marks": marks})
-        }
-
-    except Exception as e:
-        return {
-            "statusCode": 500,
-            "headers": headers,
-            "body": json.dumps({"error": str(e)})
-        }
+# Usage:
+json_path = get_file_path('q-vercel-python.json')
+with open(json_path) as f:
+    data = json.load(f)
